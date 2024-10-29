@@ -575,5 +575,173 @@ CAN HELP TO:
 
 	DHCP Snooping
 
+## LAYER 2 ATTACK MITIGATION TECHNIQUES
+802.1x
 
- 
+Dynamic ARP inspection (DAI)
+
+Static CAM entries
+
+Static ARP entries
+
+Disable DTP negotiations
+
+Manually assign Access/Trunk ports
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# NETWORK LAYER
+
+Addressing Schemes for Network (Logical Addressing)
+
+Routing
+
+Encapsulation
+
+IP Fragmentation and Reassembly
+
+Error Handling and Diagnostics
+
+## INTERNET PROTOCOL VERSIONS
+IPv4 (ARPANET 1982)
+
+Classful subnetting
+
+Classless subnetting (CIDR)
+
+NAT
+
+IPv6 (Standardized 2017)
+
+EXPLAIN IPV4 ADDRESSING
+DESCRIBE CLASSFUL IPV4 ADDRESSING AND SUBNETTING
+Class A (0 to 127)
+
+Class B (128 to 191)
+
+Class C (192 to 223)
+
+Class D (224 to 239) - Multicasting
+
+Class E (240 to 255) - Not used
+
+EXPLAIN IPV6 ADDRESSING
+
+
+## INTERNET PROTOCOL VERSIONS
+IPv4 (ARPANET 1982)
+
+Classful subnetting
+
+Classless subnetting (CIDR)
+
+NAT
+
+IPv6 (Standardized 2017)
+
+EXPLAIN IPV4 ADDRESSING
+DESCRIBE CLASSFUL IPV4 ADDRESSING AND SUBNETTING
+Class A (0 to 127)
+
+Class B (128 to 191)
+
+Class C (192 to 223)
+
+Class D (224 to 239) - Multicasting
+
+Class E (240 to 255) - Not used
+
+
+EXPLAIN IPV6 ADDRESSING
+
+
+## SUBNETTING
+IP addresses:
+
+Network Portion
+
+Host Portion
+
+Practice of "borrowing" host bits and used them as subnet bits.
+
+
+![IPv4_Header](https://github.com/user-attachments/assets/bf6b69d7-ddfa-46c0-9c62-0b6ef6e7fd78)
+
+
+## IDENTIFY IPV4 ADDRESS TYPES
+Unicast
+
+Any Class A thu C
+
+Multicast
+
+Class D
+
+Broadcast
+
+Any IP were the host portion is all on
+
+## IPV4 ADDRESS SCOPES
+Public
+
+Private (RFC 1918)
+
+Loopback (127.0.0.0/8)
+
+Link-Local (APIPA)
+
+Multicast (class D)
+
+## IPV4 FRAGMENTATION
+Breaking up packets from higher MTU to lower MTU network
+
+Performed by routers
+
+MF flag is on from 1st until 2nd to last
+
+Offset is on from 2nd until the last
+
+Offset = (MTU - (IHL x 4)) ÷ 8
+
+** Default MTU is 1500 bytes
+IHL is length of words that are in the IHL***
+
+EXPLAIN IPV6 ADDRESSING
+DESCRIBE IPV6 ADDRESSING
+IPv6 Addressing
+
+128 bit address
+
+64-bit Prefix (4 hextets)
+
+64-bit Interface ID (4 hextets)
+
+340 undecillian addresses
+
+ANALYZE INTERNETWORK ROUTING
+
+
+
+## Fragmentation Process
+
+![Fragmentation](https://github.com/user-attachments/assets/ff70d99f-58bb-46fd-91e8-2ee8c38ff3b1)
+
+Teardrop  ATTAck
+
+You can insert your own packet and it will replace a fragment of a packet and overwrite everything that follows it
+
+
+EXPLAIN IPV6 ADDRESSING
+DESCRIBE IPV6 ADDRESSING
+IPv6 Addressing
+
+128 bit address
+
+64-bit Prefix (4 hextets)
+
+64-bit Interface ID (4 hextets)
+
+340 undecillian addresses
+
+ANALYZE INTERNETWORK ROUTING
+
+
