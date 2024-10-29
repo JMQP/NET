@@ -144,5 +144,117 @@ Methods, parameters, and data formats for requests and responses.
 REST and SOAP
 
 
+# Layer 6
+
+## RESPONSIBILITIES
+Translation
+
+Formating (Turning data into something we can use
+
+Encoding (ASCII, EBCDIC, HEX, BASE64)
+
+Encryption (Symmetric or Asymmetric)
+
+Compression
+
+# Layer 7
+
+## Protocols and Headers
+
+## TELNET (TCP 23)
+
+![telnet](https://github.com/user-attachments/assets/7d223613-4cef-4c82-80ba-5b93d449b76f)
+
+Remote Login
+
+Authentication
+
+Clear Text
+
+Credentials susceptible to interception
+
+## SSH (TCP 22)
+
+![ssh](https://github.com/user-attachments/assets/0faefcc8-4d95-48c8-8e57-f278b4953f60)
+
+Messages provide:
+
+	Client/server authentication
+
+	Asymmetric or PKI for key exchange
+
+	Symmetric for session
+
+	User authentication
+
+	Data stream channeling
+
+## COMPONENTS OF SSH ARCHITECTURE
+Client / Server / Session
+
+Keys
+
+	User Key - Asymmetric public key used to identify the user to the server
+
+	Host Key - Asymmetric public key used to identify the server to the user
+
+	Session Key - Symmetric key created by the client and server to protect the session’s
+
+## SSH ARCHITECTURE
+
+![ssh_architecture](https://github.com/user-attachments/assets/b0fca04c-45c0-4b52-8cf0-5921c2bd8dba)
+
+ssh is the protocol
+
+sshd is the ssh daemon
+
+![ssh_protocol](https://github.com/user-attachments/assets/be2fddcd-8135-4f30-859c-8d98be3846f0)
+
+
+## SSH IMPLEMENTATION CONCERNS
+Using password authentication only
+
+Key rotation
+
+Key management
+
+Implementation specification (libssh, sshtrangerthings)
+
+libssh exploits sshv2
+
+## SSH Usage
+
+ssh user@ip.ip.ip.ip
+
+### SSH Options
+
+-p {port} - Alternate port
+-l {username} - Specify the username
+-X - Enable X11 forwarding
+-v(vv) - Add logging and debugging
+-i {identity file} - Specify a private key identity
+-F {config file} - Specify an alternate user config file
+-N - Do not send remote commands
+-T - Do not create a pseudo vty
+-C - Enable compression
+-f - Backgroud process after authentication
+-J user@host - Proxy jump
+-L [bind_address:]port:host:hostport
+-R [bind_address:]port:host:hostport
+-D {port}
+
+## SSH First Connect
+
+You will ned to approve server host (public)
+
+Key is saved to 
+
+	/home/student/.ssh/known_hosts
+
+ ## SSH Reconnect
+
+ Further SSH connections to server will not prompt to save key as long as key does not change
+	
+
 
 
