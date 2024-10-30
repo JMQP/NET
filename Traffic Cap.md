@@ -303,6 +303,14 @@ tcpdump 'tcp[13] & 0x11 = 0x11'
 tcpdump 'tcp[12] & 0xf0 > 0x50'
 ```
 
+All bits on is 'F' in hex 
+
+All bits off is '0' in hex
+
+So in "tcp[12] & 0xf0 > 0x50" above, the " tcp[12] indicates byte offset 12 of tcp header, "& 0xF0" is saying to just look at all bits in the 
+first field of 12th byte offset" and the "> 0x50", tells us to look at packets greater than 0x50 in this field
+
+
 ### FILTER LOGIC - MOST EXCLUSIVE
 
 ![most-bpf](https://github.com/user-attachments/assets/74db1094-81df-4d91-b0de-39324db44749)
@@ -316,3 +324,172 @@ tcp[13] = 0x11
 tcp[13] & 0xFF = 0x11
 ```
 
+
+
+### FILTER LOGIC - LESS EXCLUSIVE
+![less-bpf](https://github.com/user-attachments/assets/e3edab4f-5e81-42a0-aee6-efcd197c5b64)
+
+```
+tcp[13] & 0x11 = 0x11
+```
+
+### FILTER LOGIC - LEAST EXCLUSIVE
+![least-bpf](https://github.com/user-attachments/assets/65765344-6da9-4255-a508-0303162bbcb7)
+
+```
+tcp[13] & 0x11 > 0
+tcp[13] & 0x11 !=0
+```
+
+#  BPFS AT THE DATA-LINK LAYER
+
+Search for the destination broadcast MAC address.
+
+	'ether[0:4] = 0xffffffff && ether[4:2] = 0xffff'
+	'ether[0:2] = 0xffff && ether[2:2]= 0xffff && ether[4:2] = 0xffff'
+Search for the source MAC address of fa:16:3e:f0:ca:fc.
+
+	'ether[6:4] = 0xfa163ef0 && ether[10:2] = 0xcafc'
+	'ether[6:2] = 0xfa16 && ether[8:2] = 0x3ef0 && ether[10:2] = 0xcafc'
+
+Search for unicast (0x00) or multicast (0x01) MAC address.
+
+	'ether[0] & 0x01 = 0x00'
+	'ether[0] & 0x01 = 0x01'
+	'ether[6] & 0x01 = 0x00'
+	'ether[6] & 0x01 = 0x01'
+	BPFS AT THE DATA-LINK LAYER
+ 
+Search for IPv4, ARP, VLAN Tag, and IPv6 respectively.
+
+	ether[12:2] = 0x0800
+	ether[12:2] = 0x0806
+	ether[12:2] = 0x8100
+	ether[12:2] = 0x86dd
+
+
+Search for 802.1Q VLAN 100.
+
+	'ether[12:2] = 0x8100 && ether[14:2] & 0x0fff = 0x0064'
+	'ether[12:4] & 0xffff0fff = 0x81000064'
+ 
+Search for double VLAN Tag.
+
+	'ether[12:2] = 0x8100 && ether[16:2] = 0x8100'
+
+# BPFS AT THE NETWORK LAYER
+Search for IHL greater than 5.
+
+	'ip[0] & 0x0f > 0x05'
+	'ip[0] & 15 > 5'
+Search for ipv4 DSCP value of 16.
+
+	'ip[1] & 0xfc = 0x40'
+	'ip[1] & 252 = 64'
+	'ip[1] >> 2 = 16'
+
+ use ">> #" for bit shift
+ 
+ or
+ 
+ utilize calculator "programming mode" to see bit shift
+ 
+Search for traffic class in ipv6 having a value.
+
+	'ip6[0:2] & 0x0ff0 != 0'
+
+ Search for ONLY the RES flag set. DF and MF must be off.
+
+	'ip[6] & 0xE0 = 0x80'
+	'ip[6] & 224 = 128'
+Search for RES bit set. The other 2 flags are ignored so they can be on or off.
+
+	'ip[6] & 0x80 = 0x80'
+	'ip[6] & 128 = 128'
+Search for ONLY the DF flag set. RES and MF must be off.
+
+	'ip[6] & 0xE0 = 0x40'
+	'ip[6] & 224 = 64'
+Search for DF bit set. The other 2 flags are ignored so they can be on or off.
+
+	'ip[6] & 0x40 = 0x40'
+	'ip[6] & 64 = 64'
+
+ Search for ONLY the MF flag set. RES and DF must be off.
+
+	'ip[6] & 0xe0 = 0x20'
+	'ip[6] & 224 = 32'
+Search for MF bit set. The other 2 flags are ignored so they can be on or off.
+	
+	'ip[6] & 0x20 = 0x20'
+	'ip[6] & 32 = 32'
+
+ Search for offset field having any value greater than zero (0).
+
+	'ip[6:2] & 0x1fff > 0'
+	'ip[6:2] & 8191 > 0'
+Search for MF set or offset field having any value greater than zero (0).
+
+	'ip[6] & 0x20 = 0x20 || ip[6:2] & 0x1fff > 0'
+	'ip[6] & 32 = 32 || ip[6:2] & 8191 > 0'
+
+OFFSET VALUES GREATER THAN ZERO WILL BE USED WHEN LOOKING AT ANYTHING AFTER FIST PACKET
+
+ Search for TTL in ipv4(6) packet.
+
+	'ip[8] = 128'
+	'ip[8] < 128'
+	'ip[8] >= 128'
+	'ip6[7] = 128'
+	'ip6[7] < 128'
+	'ip6[7] >= 128'
+Search for ICMPv4(6), TCP, or UDP encapsulated within an ipv4(6) packet.
+
+	'ip[9] = 0x01'
+	'ip[9] = 0x06'
+	'ip[9] = 0x11'
+	'ip6[6] = 0x3A'
+	'ip6[6] = 0x06'
+	'ip6[6] = 0x11'
+
+ Search for ipv4 source or destination address of 10.1.1.1.
+
+	'ip[12:4] = 0x0a010101'
+	'ip[16:4] = 0x0a010101'
+Search for ipv6 source or destination address starting with FE80.
+
+	'ip6[8:2] = 0xfe80'
+	'ip6[24:2] = 0xfe80'
+
+ Every 2 values represent each octet
+
+ 
+ # BPFS AT THE TRANSPORT LAYER
+Search for TCP with options.
+
+	'tcp[12] & 0xF0 > 0x50'
+	'tcp[12] & 240 > 80'
+Search for TCP Reserve field with a value.
+
+	'tcp[12] & 0x0F != 0'
+	'tcp[12] & 15 > 0'
+
+Search for TCP Flags set to ACK+SYN. No other flags can be set.
+
+	'tcp[13] = 0x12'
+Search for TCP Flags set to ACK+SYN. The other flags are ignored.
+
+	'tcp[13] & 0x12 = 0x12' 
+
+ Search for TCP Flags ACK and SYN (both or 1 must be on).
+
+	'tcp[13] & 0x12 != 0'
+	'tcp[13] & 0x12 > 0'
+
+ Search for TCP Urgent Pointer having a value.
+
+	'tcp[18:2] != 0'
+	'tcp[18:2] > 0'
+
+ 
+ 
