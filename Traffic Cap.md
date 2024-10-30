@@ -491,5 +491,114 @@ Search for TCP Flags set to ACK+SYN. The other flags are ignored.
 	'tcp[18:2] != 0'
 	'tcp[18:2] > 0'
 
+ # WIRESHARK
+
+ ## DISPLAY FILTERS VS CAPTURE FILTERS
  
+Capture filters - used to specify which packets should be saved to disk while capturing.
+
+Display filters - allow you to change the view of what packets are displayed of those that are captured.  Does not actually exclude from total capture.
  
+## Capture Filters 
+ 
+ ![wcapture](https://github.com/user-attachments/assets/020d63ce-db5d-46ab-9189-a5ec8e95382a)
+Can use most primitives and/or BPFs
+
+## DISPLAY FILTERS
+Protocol Headers
+
+Addresses/Ports
+
+Header Fields
+
+Follow Streams
+
+Apply as Filter
+
+## MENUS
+Colorize Traffic
+
+Protocol Hierarchy
+
+Firewall Rules
+
+Exporting Objects
+
+Decrypt Traffic
+
+Conversations
+
+Endpoints
+
+I/O Graph
+
+ipv4 and ipv6 statistics
+
+Expert Information
+
+Geo Location
+
+## COLORIZE TRAFFIC
+![w12](https://github.com/user-attachments/assets/9313a6d8-ffb0-47d7-a93a-5b56d2811442)
+Menu → View → Coloring Rules
+
+## FIREWALL RULES
+![w13](https://github.com/user-attachments/assets/86978db0-c70a-4f4f-aa17-d61df881aacc)
+Menu → Tools → Firewall ACL Rules
+
+
+## DECRYPT TRAFFIC
+
+![w15](https://github.com/user-attachments/assets/69403786-aaee-4e40-a136-81391b68c3ee)
+
+
+Menu → Edit → Preference → Protocols → SSL
+
+## Geo LOCATION
+![w14](https://github.com/user-attachments/assets/2a578c6e-4897-42c6-8556-f2c99b2d01e5)
+Menu → Edit → preferences → name resolution → GeoIP database directories "Edit"
+
+# Passive OS Finger Printing (P0F)
+
+Similar to tcpdump except it only captures traffic that matches signatures in its database file.
+
+## OS
+
+Searches for specific signatures in:
+
+	Most Operating Systems
+
+	Most Browsers
+
+	Search Robots
+	
+	Command Line Tools
+
+## P0F SIGNATURE DATABASE
+
+```
+less /etc/p0f/p0f.fp
+```
+
+
+## RUN P0F ON INTERFACE
+```
+p0f -i eth0
+```
+
+## RUN P0F ON A PCAP
+```
+p0f -r capture.pcap
+```
+
+## OUTPUT TO GREPPABLE LOG FILE
+```
+p0f -r wget.pcap -o /var/log/p0f.log
+cat /var/log/p0f.log | grep {expression}
+```
+
+
+
+
+ 
+
