@@ -604,37 +604,192 @@ Windows: ipconfig /displaydns
 
 Linux: cat /etc/resolv.conf
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-# DNS CONFIGURATION
-Windows: ipconfig /displaydns
-Linux: cat /etc/resolv.conf
-ARP CACHE
+## ARP CACHE
 Windows: arp -a
-Linux: ip neighbor (arp -a depreciated)
-NETWORK CONNECTIONS
-Windows: netstat
-Linux: ss (netstat depreciated)
 
-Example options useful for both netstat and ss: -antp
+Linux: ip neighbor (neigh or n)  (arp -a depreciated)
+
+
+## NETWORK CONNECTIONS
+Windows: netstat
+
+Linux: ss (netstat depreciated)
+Use "sudo" to see process info
+```
+#Example options useful for both netstat and ss: -antp
 a = Displays all active connections and ports.
 n = No determination of protocol names. Shows 22 not SSH.
 t = Display only TCP connections.
 u = Display only UDP connections.
 p = Shows which processes are using which sockets.
-DEV TCP BANNER GRAB
+l = Shows listening ports (ss)
+```
+
+## SERVICES FILE
+Windows: %SystemRoot%\system32\drivers\etc\services
+
+Linux/Unix: /etc/services
+
+## OS INFORMATION
+Windows: systeminfo
+
+Linux: uname -a and /etc/os-release
+
+## RUNNING PROCESSES
+Windows: tasklist
+
+Linux: ps or top
+```
+#Example options useful for ps: -elf
+e = Show all running processes
+l = Show long format view
+f = Show full format listing
+```
+
+## COMMAND PATH
+which
+
+	shows path 
+
+whereis
+
+	will show where binary/associated files are
+
+## Routing Table 
+
+Windows: route print
+
+	Will also show default gateway
+
+Linux: ip route (netstat -r deprecated)
+
+
+
+VyOS: show ip route
+
+
+## FILE SEARCH
+find / -name hint* 2> /dev/null
+
+find / -iname flag* 2> /dev/null
+
+
+## SSH CONFIG
+Windows: C:\Windows\System32\OpenSSH\sshd_config
+
+Linux: /etc/ssh/sshd_config
+
+# Active Internal 
+
+## ARP SCANNING
+arp-scan --interface=eth0 --localnet
+
+nmap -sP -PR 172.16.82.96/27
+
+## PING SCANNING
+ping -c 1 172.16.82.106
+
+for i in {1..254}; do (ping -c 1 172.16.82.$i | grep "bytes from" &) ; done
+
+sudo nmap -sP 172.16.82.96/27
+
+## DEV TCP BANNER GRAB
 exec 3<>/dev/tcp/172.16.82.106/22; echo -e "" >&3; cat <&3
+
+(PART OF BASH)
+
+## DEV TCP SCANNING
+for p in {1..1023}; do(echo >/dev/tcp/172.16.82.106/$p) >/dev/null 2>&1 && echo "$p open"; done
+
+# Network Forensics
+
+## NETWORK FORENSICS - MAPPING
+Diagram devices
+
+Line Types
+
+Written Information
+
+Coloring
+
+Groupings
+
+![offensivefinishednetwork](https://github.com/user-attachments/assets/10c59cd2-72af-4e5e-a981-b1008f42cd0e)
+
+Device type (Router/host)
+
+System Host-names
+
+Interface names (eth0, eth1, etc)
+
+IP address and CIDRs for all interfaces
+
+TCP and UDP ports
+
+MAC Address
+
+OS type/version
+
+Known credentials
+
+## Network Mapping Tools
+Draw.io Local (Template)(https://1drv.ms/u/s!Arz6vf8sVG8vgpMsQ1RRtb0rcP7x4w?e=R9tlao)
+
+Draw.io Web
+
+Witeboard.com
+
+Draw.Chat
+
+SmartDraw(https://cloud.smartdraw.com/)
+
+Ziteboard(https://app.ziteboard.com/)
+
+Tutorialspoint Whiteboard(https://www.tutorialspoint.com/whiteboard.htm)
+
+Explain Everything Whiteboard(https://whiteboard.explaineverything.com/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ￼
 ￼
 ￼
