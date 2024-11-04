@@ -1,0 +1,11 @@
+term 1
+
+nc BH1 9001
+
+term 2 
+
+nc -lvnp 9001 < testpipe| nc -lvnp 9002 > testpipe
+
+term 3 
+
+nc [BH1.ip] -int 9002
