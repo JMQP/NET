@@ -472,6 +472,8 @@ Demonstrate Base64 encoding and decoding
 Conduct file transfers with Base64
 
 ## PACKERS
+Compress executeables
+
 Special code added to programs to compress executables
 
 Reduces network traffic
@@ -483,17 +485,19 @@ Reduces time on target
 Example: UPX
 
 ## ENCODING AND DECODING
+
+
 Specialized formatting
 
 Used for transmission and storage
 
 Hex and Base64 are the most common
 
-NOT Compression
+NOT Compression!!
 
-NOT Encapsulation
+NOT Encapsulation!!
 
-NOT Encryption
+NOT Encryption!!
 
 ## HEXADECIMAL ENCODING AND DECODING
 Converts the binary representation of a data set to the 2 digit base-16 equivalent.
