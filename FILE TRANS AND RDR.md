@@ -235,9 +235,13 @@ Non-Interactive
 
 ## SCP OPTIONS
 .  - Present working directory
+
 -v - verbose mode
+
 -P - alternate port
+
 -r - recursively copy an entire directory
+
 -3 - 3-way copy
 
 ## SCP Syntax
