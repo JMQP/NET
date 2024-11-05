@@ -1,4 +1,5 @@
 Step 1:
+
 Connect to http server and find flag
 
 internet_host$ ssh netX_studentX@{T3_float_ip} -L NssXX:10.3.0.27:80 -NT
@@ -7,4 +8,22 @@ ssh net5_student11@10.50.27.164 -L 51101:10.3.0.27:80 -NT
 
 get file after establishing tunnel
 
-wget -r 127.0.0.
+wget -r 127.0.0.1:51101
+
+
+Step 2: 
+
+internet_host$ ssh netX_studentX@{T3_float_ip} -D 9050 -NT
+
+ssh net5_student11@10.50.27.164 -D 9050 -NT
+
+proxychains wget -r ftp://10.3.0.1
+
+Step 3:
+
+telnet 10.50.29.131
+
+find / -name hint* 2> /dev/null
+
+find / -name flag* 2> /dev/null
+
