@@ -255,8 +255,13 @@ make sure other  9050 tunnel is closed
     			ftp 127.0.0.1
 
 
+## Post Chow Lecture
 
+ips are used to show relating pieces. NOT PART OF SYNTAX
 
+host>~$ (<user><ip>) -L <bind port>:(<tgt_ip>:<tgt_ip>) -NT
+host>~$ (<user><ip> -R <bind_port>):tgt_ip>:<tgt_port> -NT
+host>~$ (<user><ip>) -D 9050 -NT
 
 
 
