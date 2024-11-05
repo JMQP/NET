@@ -110,8 +110,91 @@ Provides insecure services encryption
 
 -NT - Do not execute a remote command and disable pseudo-tty (will hang window)
 
+# LOCAL PORT FORWARDING
+
+	ssh -p <optional alt port> <user>@<server ip> -L <local bind port>:<tgt ip>:<tgt port> -NT
+
+or
+
+	ssh -L <local bind port>:<tgt ip>:<tgt port> -p <alt port> <user>@<server 
+
+ e.g.
+
+ 	ssh <user>@<ip> -L <bind_port>:<tgt_IP>:<tgt_port>
+
+### IN CLASS ex
+Ports available Net5
+
+5XXYY
+
+X's = Student #
+
+Y's = 00-99
+
+Map Host to see vul ports
+
+	IH> nmap BH1 -T4 -vvvv -p21-23,80
+ 
+You find ports 21, 22, 23, 80 are open
+  
+Make sure port 22 uses ssh
+
+	nc BH1 22
+
+ 	Open SSh
+
+Now that it's confirmed run ssh 
+
+	IH>ssh user@BH1 - L 52200:127.0.0.1:80 -NT
+ 
+ (use a port in your range, then to the loopback net on port 80 so you can use FTP and other http services)
+ 
+ Next you need to map your port forward
+
+ 	nc 127.0.0.1 52200
+
+  Hit "Enter" key twice
+
+  Type in gibberish to confirm, if <html> format returns, your connection is successful
+
+  Now that you have established connection, utilize "wget" to interact with files
+
+  	IH>wget 127.0.0.1:52200 -r 
+
+   This will create a directory and an "index" file in that directory
+
+   To read it 
+
+   	cat 127.0.0.1:52200/index.html
+
+### SSH to BH1
+
+	ssh user@BH1
+
+ First Steps
+
+ 	ip a #will tell you all the interfaces ips
+  
+  	hostname # gives actual hostname
+   
+   	whoami 
+
+    	ip n #tells you what hosts in the net that this host has talked to recently
+
+     	uname -a # kernel version of system
+
+      	ip r #will tell us about other networks the host knows 
+
+       cat /etc/passwd #more useful for sec
+
+       netstat or ss -ntlp #show tcp ports and ip addresses
+
+       ping sweep on box that is on the network that you are not
 
 
+       	for i in {1..254} ;do (ping -c 192.168.1$i | grep "bytes from" ; done
+	
+ 
 
 
 
