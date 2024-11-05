@@ -189,21 +189,70 @@ Now that it's confirmed run ssh
 
        netstat or ss -ntlp #show tcp ports and ip addresses
 
-       ping sweep on box that is on the network that you are not
+ping sweep on box that is on the network that you are not
 
 
        	for i in {1..254} ;do (ping -c 192.168.1$i | grep "bytes from" ; done
 	
  
+Proxy chain
+
+ 	IH> ssh@BH1 -D 9050 -NT
+
+  0.0.0.0 on unix netstat readout means any ip on that sytem
+
+  	IH>proxychains nmap -T4 -vvvv -p 21-23,80 192.168.1.10 -Pn
+
+When you use proxy chains you are using whatever host you are authenticating to 
+
+	proxychains nc 127.0.0.1 21
+
+ proxy chains allows you to send any TCP traffic to any host on other side of tunnel
+
+ 	proxychians wget -r ftp://127.0.0.1
+
+  	ftp>passive
+
+   DRAGONS ON OTHER SIDE OF PROXYCHAINS
 
 
+	IH>ssh user@BH1 -L 55201:192.168.1.10:22 -NT
+
+banner grab 
+
+	nc 127.0.0.1 52201
+When you get onto a new box
+
+	BPH1> <host enumeration>
+ 
+"Host enumeration will set you free." -SSgt Woods
+
+In order to do remote port forward, you must ssh on BPH1
+
+	IH> ssh user@127.0.0.1 -p 52201
+
+ Now that youre on BPH1
+
+ 	BPH1> ssh user@BH1int -R 52299:172.0.0.1:80 -NT
+
+  When youre doing remote port forward start at high end and decrement by one as you go on
+
+Port forward only bind to loopback 
+
+	IH> ssh user@BH1 -L 52202:127.0.0.1:5299 -NT
+
+ 	IH> nc 127.0.0.1 52202
+
+  To access FTP using Dynamic port forward
+
+  	IH> ssh user@172.0.0.1:52201 -D 9050 -NT
+
+make sure other  9050 tunnel is closed
 
 
-
-
-
-
-
+   	IH> proxychains wget -r ftp://127.0.0.1
+    
+    			ftp 127.0.0.1
 
 
 
