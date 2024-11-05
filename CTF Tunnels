@@ -1,0 +1,10 @@
+Step 1:
+Connect to http server and find flag
+
+internet_host$ ssh netX_studentX@{T3_float_ip} -L NssXX:10.3.0.27:80 -NT
+
+ssh net5_student11@10.50.27.164 -L 51101:10.3.0.27:80 -NT
+
+get file after establishing tunnel
+
+wget -r 127.0.0.
