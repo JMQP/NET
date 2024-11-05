@@ -259,15 +259,55 @@ make sure other  9050 tunnel is closed
 
 ips are used to show relating pieces. NOT PART OF SYNTAX
 
-host>~$ (<user><ip>) -L <bind port>:(<tgt_ip>:<tgt_ip>) -NT
-host>~$ (<user><ip> -R <bind_port>):tgt_ip>:<tgt_port> -NT
-host>~$ (<user><ip>) -D 9050 -NT
+	host>~$ (<user><ip>) -L <bind port>:(<tgt_ip>:<tgt_ip>) -NT
+
+	host>~$ (<user><ip> -R <bind_port>):tgt_ip>:<tgt_port> -NT
+
+	host>~$ (<user><ip>) -D 9050 -NT
 
 
+ Steps
+
+ nmap scan
+
+ nc ports to verify services
+
+ if ssh is identified, ssh to tgt
+
+ host enumeration
+
+ dynamic port forward
+
+ map tunnel
+
+ proxy chains wget -r
+
+ proxy chains nc
+
+ nc -znvw1 <ip> p-p p
+
+if trying to forawrd traffic from a machine back to initial hos t use remote port forawrd
+
+damien>ssh user@james-host-int -R 52299:127.0.0.1:22 -NT
+
+on host machine make local port forward to james host 
+
+ssh user@james-host-ext -L 52200:127.0.0.1:52299 -NT
+
+MAP IT
+
+on int host nc loopback to 52200
+
+close connection with damians 22
+
+# HAHAHAHAHAHAHAHAHA JUST KIDDING GET FREAKED ON NERD
 
 
+ssh user@james-host-ext -L 52201:damien-host-ext :23 -NT 
 
+nc 172.0.0.1 52201
 
+ssh user@james-host-int -R 52299:127.0.0.1:22 -NT
 
 
 
