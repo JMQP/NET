@@ -1,4 +1,32 @@
+Notificiation
+
+
+
+DTC: Task 2-4 Start Flags
+Task 2 - Tunnels Prep: The_Only_Easy_Day_Was_Yesterday
+
+Task 3 - Donovian Tunnels Training: dig_dug_dig_dug
+
+Your Network Number is N (Given by Instructor)
+
+Credentials: net{N}_studentX:passwordX
+
+X is your student number
+
+T3 (Atropia) Float IP address is - 10.50.27.164
+
+T4 (Pineland) Float IP address is - 10.50.29.131 (Note - You can only telnet here to act as an insider, this will not be a routed path)
+
+
+Task 4 - Donovian Data Collection: Will open when Task 3 is complete
+T5 Float IP address is - 10.50.28.46
+Credentials: Same as Task 3.
+
+
+
+
 Step 1:
+
 
 Connect to http server and find flag
 
@@ -26,4 +54,10 @@ telnet 10.50.29.131
 find / -name hint* 2> /dev/null
 
 find / -name flag* 2> /dev/null
+
+
+
+
+Step 3
+
 
