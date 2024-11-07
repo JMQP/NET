@@ -1,0 +1,37 @@
+Gorgan - Cyber Threat Analysis Cell (G-CTAC)
+XX OCT 2023
+Start Time: 1300
+Duration: 4 hours
+
+Type of Operation: Traffic Analysis
+
+Objective: In support against ongoing kinetic operations by Donovian Forces, your team has been assigned responsibility to monitor, detect and classify potential threats that may impact Gorgas Cyberspace and Operations due to Donovian Cyber Threat Actors. Your team has been tasked to determine Host information within the Cyber Threat Traffic to include: types of network traffic/services, attack patterns, tools used, and exploit identification.
+
+Task 1
+Attack Analysis - Identifying Threats
+
+Link Here: CYBER THREAT TRAFFIC
+
+Tools/Techniques: Wireshark, TCPDump, Open Source Research (OSR)
+
+Scenario Credentials: FLAG = deep_deep_analysis
+
+Attack Analysis Credentials: FLAG = cyb3r_nuk35
+
+Prior Approvals: Only actions authorized are to be conducted on your Ops Stations with the threat traffic capture provided by the Gorgan Cyber Forces.
+
+Scheme of Maneuver:
+Task 1
+> INTERNET_HOST
+
+Target Section:
+
+--------------------------------------------------------------
+
+
+T1
+Hostname: INTERNET_HOST
+External IP: 10.50.XXX.XXX (ALREADY PROVIDED)
+Internal IP: 10.10.0.40 (ALREADY PROVIDED)
+creds: (ALREADY PROVIDED)
+Action: Perform Analysis on directed pcaps.
