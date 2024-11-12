@@ -179,4 +179,34 @@ nano socks.py
 d3b88e04de1e76482a1972f36734a7d8
 
 
+# TASK 2
+## NAT T5
+
+### PROMPT
+```
+IPTable Rule Definitions
+
+On T1 edit the /proc/sys/net/ipv4/ip_forward file to enable IP Forwarding. Change the value from 0 to 1.
+
+On T1 change the FORWARD policy back to ACCEPT.
+
+Configure POSTROUTING chain to translate T5 IP address to T1 (Create the rule by specifying the Interface information first then Layer 3)
+
+Once these steps have been completed and tested, go to Pivot and open up a netcat listener on port 9004 and wait up to 2 minutes for your flag. If you did not successfully accomplish the tasks above, then you will not receive the flag.
+```
+cd /proc/sys/net/core/ipv4
+nano ip_forward
+*change 0 to 1*
+
+sudo iptables -t filter -P FORWARD ACCEPT
+
+sudo iptables -t nat -A POSTROUTING -o eth0 -s 192.168.1.10 -j SNAT --to 172.16.82.106
+
+### ANSWER
+
+0c2ca80fad4accccce3bcecec1d238ce
+
+## NAT T6
+
+
 
