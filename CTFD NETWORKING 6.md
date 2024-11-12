@@ -1,7 +1,7 @@
 # TASK 1
 
-sudo iptables -A INPUT -p tcp -m multiport --ports 22, 23, 3389 -m state --state NEW, ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp -m multiport --ports 22, 23, 3389 -m state --state NEW, ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p tcp -m multiport --ports 22,23,3389 -m state --state NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp -m multiport --ports 22,23,3389 -m state --state NEW,ESTABLISHED -j ACCEPT
 
 
 sudo iptables -t filter -P INPUT DROP
