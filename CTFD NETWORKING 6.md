@@ -172,12 +172,11 @@ nano socks.py
 
 "Edit message from 'Jenny' to  953e720e688941b15b72c098022c51c3"
 
-./sock.py 
+./socks.py 
 
 ### ANSWER 
 
 d3b88e04de1e76482a1972f36734a7d8
 
 
-nano socks.py
 
