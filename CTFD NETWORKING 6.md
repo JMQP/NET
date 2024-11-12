@@ -210,3 +210,5 @@ sudo iptables -t nat -A POSTROUTING -o eth0 -s 192.168.1.10 -j SNAT --to 172.16.
 
 
 
+
+
