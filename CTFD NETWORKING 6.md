@@ -1,5 +1,8 @@
 # TASK 1
 
+
+## FILTERING T1
+
 sudo iptables -A INPUT -p tcp -m multiport --ports 22,23,3389 -m state --state NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp -m multiport --ports 22,23,3389 -m state --state NEW,ESTABLISHED -j ACCEPT
 
@@ -36,3 +39,29 @@ sudo iptables -A OUTPUT -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j AC
 # ANSWER 
 
   467accfb25050296431008a1357eacb1
+
+
+
+  ## FILTERING T3
+
+  sudo iptables -A INPUT -p tcp -m multiport --ports 22,23,3389 -m state --state NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp -m multiport --ports 22, 23, 3389 -m state --state NEW, ESTABLISHED -j ACCEPT
+
+
+sudo iptables -t filter -P INPUT DROP
+sudo iptables -t filter -P OUTPUT DROP
+sudo iptables -t filter -P FORWARD DROP
+
+
+sudo iptables -A INPUT -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p tcp --sport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+
+ANSWER
+
+05e5fb96e2a117e01fc1227f1c4d664c
+
+
+
