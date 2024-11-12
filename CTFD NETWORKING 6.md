@@ -133,3 +133,51 @@ ANSWER:
 
 
 ## FILTERING VALIDATION
+
+```
+For verification (only) of your IPTables and NFTables rules. This is NOT required for the flag:
+
+Pivot can SSH into all three targets
+
+Pivot can ping T1 and T2 but not T3
+
+T1, T2 andT3 should not be able to PING each other
+
+Pivot can access all three targets via HTTP
+
+Monitor via TCPDump on T3 for web traffic from outside the network
+
+Monitor via TCPDump on T1 for traffic on the allowed high ports
+
+Monitor via TCPDump on T2 for traffic on the allowed high ports
+
+
+To get the Validation FLAG:
+
+Once you have received the flag for T1, T2, and T3, go to Pivot and perform an md5sum on the combination of T1 flag, T2 flag, and T3 flag combined and separated by underscores.
+
+For example:
+
+echo "T1flag_T2flag_T3flag" | md5sum
+
+Update the Stream Socket Message Sender script created in Networking - 2 - Socket Creation and Packet Manipulation.
+
+Send the result of the md5sum of all three flags separated by underscores to the same IP address and port (IP 172.16.1.15 Port 5309) to receive your flag
+```
+echo 467accfb25050296431008a1357eacb1_9f7a33941828bdafd2755fd20176cdf4_05e5fb96e2a117e01fc1227f1c4d664c | md5sum
+
+953e720e688941b15b72c098022c51c3
+
+nano socks.py
+
+"Edit message from 'Jenny' to  953e720e688941b15b72c098022c51c3"
+
+./sock.py 
+
+### ANSWER 
+
+d3b88e04de1e76482a1972f36734a7d8
+
+
+nano socks.py
+
