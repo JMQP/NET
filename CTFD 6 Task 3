@@ -1,0 +1,17 @@
+Task 3: Signatures (Snort)
+×
+
+START FLAG: this_whole_ids_is_out_of_line
+
+
+T4 Snort Server (Bob): 10.50.23.190
+
+
+Login Credentials: netN_studentX:passwordX (N=net number and X=student number)
+
+
+Alt SSH Port: 25
+
+
+* DO NOT CREATE YOUR RULES ON THIS SYSTEM *
+
