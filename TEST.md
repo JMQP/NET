@@ -28,3 +28,8 @@ vNJoLOCPSOP668FfzVCp
 Final 04 Salt
 
 kh5kP5Au5orXQfetlFwU
+
+# MED PASSWORD 
+
+7cb858b709dde283ebd575c09c7ce521
+
